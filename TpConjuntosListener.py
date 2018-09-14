@@ -26,12 +26,12 @@ class TpConjuntosListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by TpConjuntosParser#setExpression.
-    def enterSetExpression(self, ctx:TpConjuntosParser.SetExpressionContext):
+    # Enter a parse tree produced by TpConjuntosParser#setElement.
+    def enterSetElement(self, ctx:TpConjuntosParser.SetElementContext):
         pass
 
-    # Exit a parse tree produced by TpConjuntosParser#setExpression.
-    def exitSetExpression(self, ctx:TpConjuntosParser.SetExpressionContext):
+    # Exit a parse tree produced by TpConjuntosParser#setElement.
+    def exitSetElement(self, ctx:TpConjuntosParser.SetElementContext):
         pass
 
 
@@ -50,6 +50,15 @@ class TpConjuntosListener(ParseTreeListener):
 
     # Exit a parse tree produced by TpConjuntosParser#ifStatement.
     def exitIfStatement(self, ctx:TpConjuntosParser.IfStatementContext):
+        pass
+
+
+    # Enter a parse tree produced by TpConjuntosParser#whileStatement.
+    def enterWhileStatement(self, ctx:TpConjuntosParser.WhileStatementContext):
+        pass
+
+    # Exit a parse tree produced by TpConjuntosParser#whileStatement.
+    def exitWhileStatement(self, ctx:TpConjuntosParser.WhileStatementContext):
         pass
 
 

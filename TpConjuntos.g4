@@ -10,10 +10,10 @@ statement:
     | VARNAME                   
     | booleanExpression          
     | ifStatement
-    | setExpression
+    | setElement
     ;
 
-setExpression:
+setElement:
       'set[' n_start=NUMBER n_end=NUMBER n_step=NUMBER ']'
     | 'set[' n_start=NUMBER n_end=NUMBER ']'
     ;
@@ -27,11 +27,18 @@ ifStatement:
       'then ' (statement)+ 
       ('else ' (statement)+ )?
       'fi'
-    
+    ;
+
+whileStatement:
+      'while' booleanExpression 'do'
+        (statement)+
+      'done'
     ;
 
 booleanExpression:
-    operand COMPARATION_OPERATOR operand  
+      operand           op=COMPARATION_OPERATOR operand
+    | booleanExpression op=AND_OPERATOR booleanExpression
+    | booleanExpression op=OR_OPERATOR booleanExpression
     ;
 
 operand:
@@ -40,7 +47,7 @@ operand:
     ;
 
 expression: 
-      setExpression
+      setElement
     | term
     | expression '+' term   
     | expression '-' term   
@@ -53,11 +60,14 @@ term:
     ;
 
 factor: 
-    NUMBER                     
+      n=NUMBER      
+    | vn=VARNAME               
     | '(' expression ')'     
     ;
 
 
+AND_OPERATOR : 'and';
+OR_OPERATOR : 'or';
 COMPARATION_OPERATOR : '=='|'<='|'>='|'<'|'>'|'!=';
 
 VARNAME : [a-z]+;

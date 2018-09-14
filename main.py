@@ -57,11 +57,11 @@ class RealListener(TpConjuntosListener):
                         self.visitStatement(node.children[i])
                         i += 1
             
-            elif type(node) == TpConjuntosParser.SetExpressionContext:
-                self.visitSetExpression(node)
+            elif type(node) == TpConjuntosParser.SetElementContext:
+                self.visitSetElement(node)
 
     
-    def visitSetExpression(self, ctx:TpConjuntosParser.SetExpressionContext):
+    def visitSetElement(self, ctx:TpConjuntosParser.SetElementContext):
         aux = []
         n_start = int(ctx.n_start.text)
         n_end = int(ctx.n_end.text)
@@ -76,9 +76,27 @@ class RealListener(TpConjuntosListener):
         
         return aux
 
-
+    
+    def visitWhileStatement(self, ctx:TpConjuntosParser.WhileStatementContext):
+        
+        while self.visitBooleanExpresion(ctx.children[1]):
+            print('en el while!!!')
+            i = 3
+            while i < len(ctx.children) - 1 and type(ctx.children[i]) != antlr4.tree.Tree.TerminalNodeImpl:
+                self.visitStatement(ctx.children[i])
+                i += 1
     # Ok
     def visitBooleanExpresion(self, ctx:TpConjuntosParser.BooleanExpressionContext):
+        if ctx.op.text == 'and':
+            be_left = self.visitBooleanExpresion(ctx.children[0])
+            be_right = self.visitBooleanExpresion(ctx.children[2])
+            return be_left and be_right
+
+        if ctx.op.text == 'or':
+            be_left = self.visitBooleanExpresion(ctx.children[0])
+            be_right = self.visitBooleanExpresion(ctx.children[2])
+            return be_left or be_right
+
         left =  self.visitOperand(ctx.children[0])
         right = self.visitOperand(ctx.children[2])
         op = ctx.children[1].symbol.text
@@ -109,8 +127,8 @@ class RealListener(TpConjuntosListener):
             return self.visitTerm(ctx.children[0])
         
         # Es un Set
-        if type(ctx.children[0]) == TpConjuntosParser.SetExpressionContext:
-            return self.visitSetExpression(ctx.children[0])
+        if type(ctx.children[0]) == TpConjuntosParser.SetElementContext:
+            return self.visitSetElement(ctx.children[0])
         
         # Es una Expression + - Term
         sign = 1
@@ -140,6 +158,12 @@ class RealListener(TpConjuntosListener):
     # Ok
     def visitFactor(self, ctx:TpConjuntosParser.FactorContext):
         
+        if ctx.n != None:
+            return int(ctx.n.text)
+
+        if ctx.vn != None:
+            return self.variables[ctx.vn.text]
+
         if ctx.children[0].symbol.text != '(':
             nodo = ctx.children[0]
             return int(nodo.symbol.text)
@@ -150,7 +174,7 @@ class RealListener(TpConjuntosListener):
 def main():
   
     program =   "a = 37 \n"
-    program +=  "b = 54 \n"
+    program +=  "b = a+3 \n"
     program +=  "c = set[0 5 2] \n"
 
     input = InputStream(program)
