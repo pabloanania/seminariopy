@@ -60,6 +60,9 @@ class RealListener(TpConjuntosListener):
             elif type(node) == TpConjuntosParser.SetElementContext:
                 self.visitSetElement(node)
 
+            elif type(node) == TpConjuntosParser.SetFunctionContext:
+                self.visitSetFunction(node)
+
     
     def visitSetElement(self, ctx:TpConjuntosParser.SetElementContext):
         aux = []
@@ -76,11 +79,27 @@ class RealListener(TpConjuntosListener):
         
         return aux
 
+
+    def visitSetFunction(self, ctx:TpConjuntosParser.SetFunctionContext):
+        child = ctx.children[0]
+        if type(child) == TpConjuntosParser.SetBelongsContext:
+            return self.visitSetBelongs(child)
+        elif type(child) == TpConjuntosParser.SetElementSumContext:
+            return self.visitSetElementSum(child)
+
+
+    def visitSetBelongs(self, ctx:TpConjuntosParser.SetBelongsContext):
+        if int(ctx.n_belongs.text) in self.variables[ctx.s_name.text]:
+            return True
+        else:
+            return False
+
+    def visitSetElementSum(self, ctx:TpConjuntosParser.SetElementSumContext):
+        return sum(self.variables[ctx.s_name.text])
     
+
     def visitWhileStatement(self, ctx:TpConjuntosParser.WhileStatementContext):
-        
         while self.visitBooleanExpresion(ctx.children[1]):
-            print('en el while!!!')
             i = 3
             while i < len(ctx.children) - 1 and type(ctx.children[i]) != antlr4.tree.Tree.TerminalNodeImpl:
                 self.visitStatement(ctx.children[i])
@@ -117,7 +136,15 @@ class RealListener(TpConjuntosListener):
     # Ok
     def visitAssignStatement(self, ctx:TpConjuntosParser.AssignStatementContext):
         name = ctx.children[0].symbol.text
-        value = self.visitExpression(ctx.children[2])
+        value = None
+        
+        if type(ctx.children[2]) == TpConjuntosParser.ExpressionContext:
+            value = self.visitExpression(ctx.children[2])
+        elif type(ctx.children[2]) == TpConjuntosParser.SetElementContext:
+            value = self.visitSetElement(ctx.children[2])
+        elif type(ctx.children[2]) == TpConjuntosParser.SetFunctionContext:
+            value = self.visitSetFunction(ctx.children[2])
+
         self.variables[name] = value
 
     # Ok
@@ -125,10 +152,6 @@ class RealListener(TpConjuntosListener):
         # Es un Term
         if type(ctx.children[0]) == TpConjuntosParser.TermContext:
             return self.visitTerm(ctx.children[0])
-        
-        # Es un Set
-        if type(ctx.children[0]) == TpConjuntosParser.SetElementContext:
-            return self.visitSetElement(ctx.children[0])
         
         # Es una Expression + - Term
         sign = 1
@@ -172,10 +195,13 @@ class RealListener(TpConjuntosListener):
         
 
 def main():
-  
     program =   "a = 37 \n"
     program +=  "b = a+3 \n"
-    program +=  "c = set[0 5 2] \n"
+
+    program =  "c = set[0 5 2] \n"
+    program += "d = c.belongs(2)"
+    program += "e = c.elementSum()"
+
 
     input = InputStream(program)
     lexer = TpConjuntosLexer(input)

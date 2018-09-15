@@ -11,15 +11,32 @@ statement:
     | booleanExpression          
     | ifStatement
     | setElement
+    | setFunction
     ;
 
 setElement:
       'set[' n_start=NUMBER n_end=NUMBER n_step=NUMBER ']'
     | 'set[' n_start=NUMBER n_end=NUMBER ']'
+    | VARNAME
+    ;
+
+setFunction:
+      setBelongs
+    | setElementSum
+    ;
+
+setBelongs:
+    s_name=VARNAME '.belongs(' n_belongs=NUMBER ')'
+    ;
+
+setElementSum:
+    s_name=VARNAME '.elementSum()'
     ;
 
 assignStatement:
       VARNAME '=' expression
+    | VARNAME '=' setElement
+    | VARNAME '=' setFunction
     ;
 
 ifStatement:
@@ -47,8 +64,7 @@ operand:
     ;
 
 expression: 
-      setElement
-    | term
+      term
     | expression '+' term   
     | expression '-' term   
     ;

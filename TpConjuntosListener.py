@@ -35,6 +35,33 @@ class TpConjuntosListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by TpConjuntosParser#setFunction.
+    def enterSetFunction(self, ctx:TpConjuntosParser.SetFunctionContext):
+        pass
+
+    # Exit a parse tree produced by TpConjuntosParser#setFunction.
+    def exitSetFunction(self, ctx:TpConjuntosParser.SetFunctionContext):
+        pass
+
+
+    # Enter a parse tree produced by TpConjuntosParser#setBelongs.
+    def enterSetBelongs(self, ctx:TpConjuntosParser.SetBelongsContext):
+        pass
+
+    # Exit a parse tree produced by TpConjuntosParser#setBelongs.
+    def exitSetBelongs(self, ctx:TpConjuntosParser.SetBelongsContext):
+        pass
+
+
+    # Enter a parse tree produced by TpConjuntosParser#setElementSum.
+    def enterSetElementSum(self, ctx:TpConjuntosParser.SetElementSumContext):
+        pass
+
+    # Exit a parse tree produced by TpConjuntosParser#setElementSum.
+    def exitSetElementSum(self, ctx:TpConjuntosParser.SetElementSumContext):
+        pass
+
+
     # Enter a parse tree produced by TpConjuntosParser#assignStatement.
     def enterAssignStatement(self, ctx:TpConjuntosParser.AssignStatementContext):
         pass
