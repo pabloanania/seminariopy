@@ -62,6 +62,60 @@ class TpConjuntosListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by TpConjuntosParser#setElementAverage.
+    def enterSetElementAverage(self, ctx:TpConjuntosParser.SetElementAverageContext):
+        pass
+
+    # Exit a parse tree produced by TpConjuntosParser#setElementAverage.
+    def exitSetElementAverage(self, ctx:TpConjuntosParser.SetElementAverageContext):
+        pass
+
+
+    # Enter a parse tree produced by TpConjuntosParser#setLength.
+    def enterSetLength(self, ctx:TpConjuntosParser.SetLengthContext):
+        pass
+
+    # Exit a parse tree produced by TpConjuntosParser#setLength.
+    def exitSetLength(self, ctx:TpConjuntosParser.SetLengthContext):
+        pass
+
+
+    # Enter a parse tree produced by TpConjuntosParser#setIntersection.
+    def enterSetIntersection(self, ctx:TpConjuntosParser.SetIntersectionContext):
+        pass
+
+    # Exit a parse tree produced by TpConjuntosParser#setIntersection.
+    def exitSetIntersection(self, ctx:TpConjuntosParser.SetIntersectionContext):
+        pass
+
+
+    # Enter a parse tree produced by TpConjuntosParser#setUnion.
+    def enterSetUnion(self, ctx:TpConjuntosParser.SetUnionContext):
+        pass
+
+    # Exit a parse tree produced by TpConjuntosParser#setUnion.
+    def exitSetUnion(self, ctx:TpConjuntosParser.SetUnionContext):
+        pass
+
+
+    # Enter a parse tree produced by TpConjuntosParser#setDifference.
+    def enterSetDifference(self, ctx:TpConjuntosParser.SetDifferenceContext):
+        pass
+
+    # Exit a parse tree produced by TpConjuntosParser#setDifference.
+    def exitSetDifference(self, ctx:TpConjuntosParser.SetDifferenceContext):
+        pass
+
+
+    # Enter a parse tree produced by TpConjuntosParser#setComplement.
+    def enterSetComplement(self, ctx:TpConjuntosParser.SetComplementContext):
+        pass
+
+    # Exit a parse tree produced by TpConjuntosParser#setComplement.
+    def exitSetComplement(self, ctx:TpConjuntosParser.SetComplementContext):
+        pass
+
+
     # Enter a parse tree produced by TpConjuntosParser#assignStatement.
     def enterAssignStatement(self, ctx:TpConjuntosParser.AssignStatementContext):
         pass

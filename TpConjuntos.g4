@@ -23,6 +23,12 @@ setElement:
 setFunction:
       setBelongs
     | setElementSum
+    | setElementAverage
+    | setLength
+    | setIntersection
+    | setUnion
+    | setDifference
+    | setComplement
     ;
 
 setBelongs:
@@ -31,6 +37,30 @@ setBelongs:
 
 setElementSum:
     s_name=VARNAME '.elementSum()'
+    ;
+
+setElementAverage:
+    s_name=VARNAME '.elementAvg()'
+    ;
+
+setLength:
+    s_name=VARNAME '.length()'
+    ;
+
+setIntersection:
+    s_name=VARNAME '.intersection(' s_comp_name=VARNAME ')'
+    ;
+
+setUnion:
+    s_name=VARNAME '.union(' s_comp_name=VARNAME ')'
+    ;
+
+setDifference:
+    s_name=VARNAME '.difference(' s_comp_name=VARNAME ')'
+    ;
+
+setComplement:
+    s_name=VARNAME '.complement(' s_comp_name=VARNAME ')'
     ;
 
 assignStatement:

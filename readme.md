@@ -16,16 +16,16 @@ Realizar la gramática para operar con conjuntos.
 
 ## Operaciones:
 
-1. Intersección
-2. Unión
-3. Diferencia
-4. Complemento
-5. Asignación
-6. Mostrar
-7. Pertenece Elemento
-8. Sumar Elementos
-9. Promediar Elementos
-10. Longitud
+01. DONE - Intersección
+02. DONE - Unión
+03. DONE - Diferencia
+04. DONE - Complemento
+05. DONE - Asignación
+06. DONE - Mostrar
+07. DONE - Pertenece Elemento
+08. DONE - Sumar Elementos
+09. DONE - Promediar Elementos
+10. DONE - Longitud
 
 ### Ejemplos:
 

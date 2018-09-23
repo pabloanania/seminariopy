@@ -4,9 +4,7 @@ from TpConjuntosParser import TpConjuntosParser
 from TpConjuntosListener import TpConjuntosListener
 import antlr4
 
-# TODO:
-# Asignar sets a variables
-# Seguir con el resto de las funciones de set
+
 
 
 class RealListener(TpConjuntosListener):
@@ -86,6 +84,18 @@ class RealListener(TpConjuntosListener):
             return self.visitSetBelongs(child)
         elif type(child) == TpConjuntosParser.SetElementSumContext:
             return self.visitSetElementSum(child)
+        elif type(child) == TpConjuntosParser.SetElementAverageContext:
+            return self.visitSetElementAverage(child)
+        elif type(child) == TpConjuntosParser.SetLengthContext:
+            return self.visitSetLength(child)
+        elif type(child) == TpConjuntosParser.SetIntersectionContext:
+            return self.visitSetIntersection(child)
+        elif type(child) == TpConjuntosParser.SetUnionContext:
+            return self.visitSetUnion(child)
+        elif type(child) == TpConjuntosParser.SetDifferenceContext:
+            return self.visitSetDifference(child)
+        elif type(child) == TpConjuntosParser.SetComplementContext:
+            return self.visitSetComplement(child)
 
 
     def visitSetBelongs(self, ctx:TpConjuntosParser.SetBelongsContext):
@@ -96,6 +106,32 @@ class RealListener(TpConjuntosListener):
 
     def visitSetElementSum(self, ctx:TpConjuntosParser.SetElementSumContext):
         return sum(self.variables[ctx.s_name.text])
+
+    def visitSetElementAverage(self, ctx:TpConjuntosParser.SetElementSumContext):
+        return sum(self.variables[ctx.s_name.text])/len(self.variables[ctx.s_name.text])
+
+    def visitSetLength(self, ctx:TpConjuntosParser.SetElementSumContext):
+        return len(self.variables[ctx.s_name.text])
+
+    def visitSetIntersection(self, ctx:TpConjuntosParser.SetElementSumContext):
+        sa = set(self.variables[ctx.s_name.text])
+        sb = set(self.variables[ctx.s_comp_name.text])
+        return list(sa.intersection(sb))
+
+    def visitSetUnion(self, ctx:TpConjuntosParser.SetElementSumContext):
+        sa = set(self.variables[ctx.s_name.text])
+        sb = set(self.variables[ctx.s_comp_name.text])
+        return list(sa.union(sb))
+    
+    def visitSetDifference(self, ctx:TpConjuntosParser.SetElementSumContext):
+        sa = set(self.variables[ctx.s_name.text])
+        sb = set(self.variables[ctx.s_comp_name.text])
+        return list(sa.difference(sb))
+
+    def visitSetComplement(self, ctx:TpConjuntosParser.SetElementSumContext):
+        sa = set(self.variables[ctx.s_name.text])
+        sb = set(self.variables[ctx.s_comp_name.text])
+        return list(sb.difference(sa))
     
 
     def visitWhileStatement(self, ctx:TpConjuntosParser.WhileStatementContext):
@@ -195,12 +231,17 @@ class RealListener(TpConjuntosListener):
         
 
 def main():
-    program =   "a = 37 \n"
-    program +=  "b = a+3 \n"
+    program =  "a = set[0 5] \n"
+    program += "b = set[2 8 2] \n"
 
-    program =  "c = set[0 5 2] \n"
-    program += "d = c.belongs(2)"
-    program += "e = c.elementSum()"
+    program += "c = a.belongs(2) \n"
+    program += "d = a.elementSum() \n"
+    program += "e = a.elementAvg() \n"
+    program += "f = a.length() \n"
+    program += "g = a.intersection(b) \n"
+    program += "h = a.union(b) \n"
+    program += "i = a.difference(b) \n"
+    program += "j = a.complement(b) \n"
 
 
     input = InputStream(program)
